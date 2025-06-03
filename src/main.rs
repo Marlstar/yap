@@ -1,4 +1,6 @@
+use yap::server::Server;
+
 #[tokio::main]
 async fn main() {
-    println!("yap :o");
+    Server::new().await.run().await;
 }
