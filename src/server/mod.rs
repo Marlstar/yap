@@ -35,11 +35,12 @@ impl Server { // Functionality
         loop {
             tokio::select! {
                 (client, addr) = self.accept_client() => self.onboard_client(client, addr).await,
+                client = self.check_client_heartbeats() => self.handle_client_disconnect(client).await,
             };
         }
     }
 
-    async fn accept_client(&mut self) -> (TcpStream, SocketAddr) {
+    async fn accept_client(&self) -> (TcpStream, SocketAddr) {
         // TODO: error handling
         return self.sock.accept().await.unwrap();
     }
@@ -49,5 +50,24 @@ impl Server { // Functionality
         let handler = ClientHandler::new(client, addr);
 
         self.clients.insert(handler.uuid, handler);
+    }
+
+    async fn handle_client_disconnect(&mut self, client: Uuid) {
+        let client = self.clients.remove(&client).expect("tried to remove a nonexistent client");
+        client.handle_remote_disconnect().await;
+    }
+
+    // TODO: make this the responsibility of the client handlers rather than the server itself
+    async fn check_client_heartbeats(&self) -> Uuid {
+        loop {
+            for client in self.clients.values() {
+                if !client.heartbeat().await {
+                    println!("[{:?}] disconnected", client.addr);
+                    return client.uuid;
+                };
+            }
+
+            tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+        }
     }
 }
