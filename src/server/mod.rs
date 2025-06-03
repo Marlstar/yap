@@ -31,6 +31,7 @@ impl Server { // Construction
 }
 impl Server { // Functionality
     pub async fn run(&mut self) {
+        println!("[main] server running");
         loop {
             tokio::select! {
                 (client, addr) = self.accept_client() => self.onboard_client(client, addr).await,
