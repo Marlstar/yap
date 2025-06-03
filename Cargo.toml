@@ -5,4 +5,6 @@ edition = "2024"
 
 [dependencies]
 crossbeam-channel = "0.5.15"
+hashbrown = "0.15.3"
 tokio = { version = "1.45.1", features = ["macros", "rt-multi-thread", "time", "sync", "net"] }
+uuid = { version = "1.17.0", features = ["v4"] }
