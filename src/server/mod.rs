@@ -50,6 +50,7 @@ impl Server { // Functionality
         let handler = ClientHandler::new(client, addr);
 
         self.clients.insert(handler.uuid, handler);
+        dbg!(self.receive_messages().await);
     }
 
     async fn handle_client_disconnect(&mut self, client: Uuid) {
@@ -68,6 +69,16 @@ impl Server { // Functionality
             }
 
             tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+        }
+    }
+
+    async fn receive_messages(&mut self) -> (Uuid, crate::client::Message) {
+        loop {
+            for client in self.clients.values_mut() {
+                if let Some(msg) = client.receive_message().await {
+                    return (client.uuid, msg);
+                }
+            }
         }
     }
 }

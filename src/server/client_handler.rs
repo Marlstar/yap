@@ -22,7 +22,8 @@ impl ClientHandler {
             Ok(ready) => {
                 // Honestly not sure why you would invert this
                 // but that's what it needs ¯\_(ツ)_/¯
-                return !(ready.is_readable() && ready.is_writable());
+                return true;
+                return !(ready.is_readable() || ready.is_writable());
             },
             Err(_) => return false,
         };
@@ -30,5 +31,18 @@ impl ClientHandler {
 
     pub async fn handle_remote_disconnect(&self) {
         // For future if I need to do anything in the handler when client disconnects
+    }
+
+    pub async fn receive_message(&mut self) -> Option<crate::client::Message> {
+        match crate::common::net::read_message(&mut self.sock).await {
+            Ok(a) => Some(a),
+            Err(e) => match e.kind() {
+                std::io::ErrorKind::ConnectionAborted | std::io::ErrorKind::ConnectionReset => {
+                    println!("client disconnected");
+                    None
+                },
+                e => panic!("{e:?}"),
+            }
+        }
     }
 }

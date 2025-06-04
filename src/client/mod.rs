@@ -1,6 +1,12 @@
 use std::net::SocketAddr;
 use tokio::io::Interest;
+use tokio::io::{AsyncWrite, AsyncWriteExt, AsyncRead, AsyncReadExt};
 use tokio::net::TcpStream;
+// use tokio_byteorder::{AsyncReadBytesExt, AsyncWriteBytesExt, BigEndian};
+use tokio_byteorder::BigEndian;
+
+mod message;
+pub use message::Message;
 
 pub struct Client {
     sock: TcpStream,
@@ -27,6 +33,11 @@ impl Client { // Construction
 impl Client { // Functionality
     pub async fn run(&mut self) {
         println!("[main] client running");
+
+        // FIX: this is a test
+        tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+        println!("sending");
+        self.send_message(Message::new("test message".to_string())).await.unwrap();
         
         // TODO: remove this allow once I add more functionality
         #[allow(clippy::never_loop)]
@@ -46,13 +57,22 @@ impl Client { // Functionality
     }
 
     async fn check_server_status(&self) -> bool {
+        tokio::time::sleep(std::time::Duration::from_secs(5)).await;
         match self.sock.ready(Interest::READABLE | Interest::WRITABLE).await {
             Ok(ready) => {
                 // Honestly not sure why you would invert this
                 // but that's what it needs ¯\_(ツ)_/¯
-                return !(ready.is_readable() && ready.is_writable());
+                return !(ready.is_readable() || ready.is_writable());
             },
             Err(_) => return false,
         };
+    }
+
+    async fn send_message(&mut self, msg: Message) -> tokio::io::Result<()> {
+        crate::common::net::write_message(&mut self.sock, msg).await
+    }
+
+    async fn send_bytes(&mut self, bytes: &[u8]) -> tokio::io::Result<()> {
+        crate::common::net::write_bytes(&mut self.sock, bytes).await
     }
 }
