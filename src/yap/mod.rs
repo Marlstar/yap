@@ -18,4 +18,10 @@ impl Yap {
     pub fn theme(&self) -> iced::Theme {
         self.colours.iced_theme()
     }
+
+    pub fn window_settings() -> iced::window::Settings {
+        iced::window::Settings {
+            ..Default::default()
+        }
+    }
 }
