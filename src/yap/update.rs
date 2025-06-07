@@ -3,6 +3,9 @@ use crate::message::Message;
 
 impl super::Yap {
     pub fn update(&mut self, msg: Message) -> Task {
-        todo!()
+        match msg {
+            Message::None => Task::none(),
+            Message::Exit => iced::exit(),
+        }
     }
 }
