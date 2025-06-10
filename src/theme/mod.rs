@@ -1,6 +1,8 @@
 use iced::{theme::Custom, Color};
 use std::sync::Arc;
 
+pub mod container;
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Theme {
     #[serde(with = "ColorDef")]
@@ -52,6 +54,19 @@ impl Theme {
 
     pub fn iced_theme(&self) -> iced::theme::Theme {
         return iced::theme::Theme::Custom(Arc::new(Custom::new("Yap".to_string(), self.iced_palette())));
+    }
+}
+
+impl iced::theme::Base for Theme {
+    fn base(&self) -> iced::theme::Style {
+        iced::theme::Style {
+            text_color: self.text,
+            background_color: self.base,
+        }
+    }
+
+    fn palette(&self) -> Option<iced::theme::Palette> {
+        Some(self.iced_palette())
     }
 }
 

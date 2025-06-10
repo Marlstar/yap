@@ -1,13 +1,17 @@
 use crate::state::State;
 use crate::theme::Theme;
+
 mod boot;
 mod view;
 mod update;
+mod titlebar;
 
 /// The main client struct :)
 pub struct Yap {
     state: State,
     theme: Theme,
+
+    titlebar: titlebar::Titlebar,
 }
 impl Yap {
     pub fn title(&self) -> String {

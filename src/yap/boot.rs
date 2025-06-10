@@ -10,6 +10,8 @@ impl super::Yap {
         let s = Self {
             state,
             theme: colours,
+
+            titlebar: super::titlebar::Titlebar,
         };
         let task = Task::none();
         return (s, task);

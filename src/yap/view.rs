@@ -6,20 +6,8 @@ use crate::style;
 impl super::Yap {
     pub fn view(&self) -> Element<Message> {
         column![
-            self.titlebar(),
+            self.titlebar.view(&self.theme),
         ].into()
     }
 
-    fn titlebar(&self) -> Element<Message> {
-        let exit = button("Exit").on_press(Message::Exit);
-
-        let titlebar = row![
-            horizontal_space(),
-            exit
-        ];
-
-        let titlebar = container(titlebar).style(style::Container::surface_bg(&self.theme));
-
-        return titlebar.into();
-    }
 }
