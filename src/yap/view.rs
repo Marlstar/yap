@@ -1,6 +1,7 @@
 use iced::Element;
 use iced::widget::{text, button, text_input, container, row, column, horizontal_space};
 use crate::message::Message;
+use crate::style;
 
 impl super::Yap {
     pub fn view(&self) -> Element<Message> {
@@ -15,8 +16,10 @@ impl super::Yap {
         let titlebar = row![
             horizontal_space(),
             exit
-        ].into();
+        ];
 
-        return titlebar;
+        let titlebar = container(titlebar).style(style::Container::surface_bg(&self.colours));
+
+        return titlebar.into();
     }
 }
