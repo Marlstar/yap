@@ -6,7 +6,16 @@ impl super::Yap {
         match msg {
             Message::None => Task::none(),
             Message::Exit => self.exit(),
+
+            Message::SendMessage(msg) => self.send_message(msg),
+
+            Message::MessageBar(msg) => self.messagebar.update(msg),
         }
+    }
+
+    fn send_message(&mut self, msg: String) -> Task {
+        println!("Sending message: \"{msg}\"");
+        Task::none()
     }
 
     fn exit(&self) -> Task {

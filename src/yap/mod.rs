@@ -4,7 +4,8 @@ use crate::theme::Theme;
 mod boot;
 mod view;
 mod update;
-mod titlebar;
+pub mod titlebar;
+pub mod messagebar;
 
 /// The main client struct :)
 pub struct Yap {
@@ -12,6 +13,7 @@ pub struct Yap {
     theme: Theme,
 
     titlebar: titlebar::Titlebar,
+    messagebar: messagebar::MessageBar,
 }
 impl Yap {
     pub fn title(&self) -> String {

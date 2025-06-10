@@ -12,6 +12,7 @@ impl super::Yap {
             theme: colours,
 
             titlebar: super::titlebar::Titlebar,
+            messagebar: super::messagebar::MessageBar::new(),
         };
         let task = Task::none();
         return (s, task);

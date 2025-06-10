@@ -1,13 +1,12 @@
 use iced::Element;
-use iced::widget::{text, button, text_input, container, row, column, horizontal_space};
+use iced::widget::column;
 use crate::message::Message;
-use crate::style;
 
 impl super::Yap {
     pub fn view(&self) -> Element<Message> {
         column![
             self.titlebar.view(&self.theme),
+            self.messagebar.view(&self.theme),
         ].into()
     }
-
 }
