@@ -6,4 +6,4 @@ pub mod message;
 pub mod dirs;
 pub mod types;
 pub mod style;
-pub mod colours;
+pub mod theme;

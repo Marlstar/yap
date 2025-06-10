@@ -1,5 +1,5 @@
 use crate::state::State;
-use crate::colours::Colours;
+use crate::theme::Theme;
 mod boot;
 mod view;
 mod update;
@@ -7,7 +7,7 @@ mod update;
 /// The main client struct :)
 pub struct Yap {
     state: State,
-    colours: Colours,
+    theme: Theme,
 }
 impl Yap {
     pub fn title(&self) -> String {
@@ -16,7 +16,7 @@ impl Yap {
     }
 
     pub fn theme(&self) -> iced::Theme {
-        self.colours.iced_theme()
+        self.theme.iced_theme()
     }
 
     pub fn window_settings() -> iced::window::Settings {

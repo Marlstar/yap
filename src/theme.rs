@@ -2,7 +2,7 @@ use iced::{theme::Custom, Color};
 use std::sync::Arc;
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
-pub struct Colours {
+pub struct Theme {
     #[serde(with = "ColorDef")]
     pub base: Color,
     #[serde(with = "ColorDef")]
@@ -18,11 +18,11 @@ pub struct Colours {
     #[serde(with = "ColorDef")]
     pub error: Color,
 }
-impl Default for Colours {
+impl Default for Theme {
     fn default() -> Self {
         let palette = catppuccin::PALETTE.mocha.colors;
 
-        Colours {
+        Theme {
             base: Self::iced_from_catppuccin(palette.base),
             surface: Self::iced_from_catppuccin(palette.surface0),
             text: Self::iced_from_catppuccin(palette.text),
@@ -33,7 +33,7 @@ impl Default for Colours {
         }
     }
 }
-impl Colours {
+impl Theme {
     fn iced_from_catppuccin(c: catppuccin::Color) -> Color {
         let rgb = c.rgb;
         return Color::from_rgb8(rgb.r, rgb.g, rgb.b);

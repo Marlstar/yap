@@ -18,7 +18,7 @@ impl super::Yap {
             exit
         ];
 
-        let titlebar = container(titlebar).style(style::Container::surface_bg(&self.colours));
+        let titlebar = container(titlebar).style(style::Container::surface_bg(&self.theme));
 
         return titlebar.into();
     }

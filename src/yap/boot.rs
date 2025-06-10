@@ -1,15 +1,15 @@
 use crate::state::State;
 use crate::types::Task;
-use crate::colours::Colours;
+use crate::theme::Theme;
 
 impl super::Yap {
     pub fn boot() -> (Self, Task) {
         let state = State::read().unwrap_or_default();
-        let colours = Colours::default();
+        let colours = Theme::default();
 
         let s = Self {
             state,
-            colours,
+            theme: colours,
         };
         let task = Task::none();
         return (s, task);
