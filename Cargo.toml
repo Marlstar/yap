@@ -28,3 +28,6 @@ features = [
 	"tiny-skia",
 	"tokio",
 ]
+
+[dependencies.yapnet]
+path = "yapnet"

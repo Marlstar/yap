@@ -4867,7 +4867,12 @@ dependencies = [
  "tokio",
  "tokio-byteorder",
  "uuid",
+ "yapnet",
 ]
+
+[[package]]
+name = "yapnet"
+version = "0.1.0"
 
 [[package]]
 name = "yazi"
