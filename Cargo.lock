@@ -4873,6 +4873,7 @@ dependencies = [
 name = "yapnet"
 version = "0.1.0"
 dependencies = [
+ "futures",
  "rmp-serde",
  "serde",
  "tokio",
