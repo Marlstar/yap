@@ -4861,7 +4861,6 @@ dependencies = [
  "directories",
  "hashbrown",
  "iced",
- "rmp-serde",
  "ron",
  "serde",
  "tokio",
@@ -4873,6 +4872,12 @@ dependencies = [
 [[package]]
 name = "yapnet"
 version = "0.1.0"
+dependencies = [
+ "rmp-serde",
+ "serde",
+ "tokio",
+ "uuid",
+]
 
 [[package]]
 name = "yazi"
